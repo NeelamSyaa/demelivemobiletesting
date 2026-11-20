@@ -5,10 +5,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.http.ClientConfig;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import io.appium.java_client.AppiumBy;
@@ -38,7 +40,27 @@ public class BaseClass {
 
         driver = new AndroidDriver(url, options);
     }
+    @Test(priority = 0, dataProvider = "login")
+    public void loginpage(String user, String pass) { // 1. Added parameters
+        WebElement usrname = driver.findElement(AppiumBy.id(""));
+        usrname.sendKeys(user); // 2. Passed 'user'
 
+        WebElement password = driver.findElement(AppiumBy.id(""));
+        password.sendKeys(pass); // 3. Fixed variable to 'password' & passed 'pass'
+
+        WebElement loginbtn = driver.findElement(AppiumBy.id(""));
+        loginbtn.click();
+    }
+
+    @DataProvider(name = "login")
+    public Object[][] getdata() {
+        return new Object[][] {
+            { " testing ", " not testing" } // 4. Added inner { } braces for 2D array
+        };
+    }
+
+    
+    
     @Test(priority = 1)
     public void deviceHandle() {
 
@@ -68,6 +90,15 @@ public class BaseClass {
     	WebElement textclick = driver.findElement(AppiumBy.androidUIAutomator(""));
     System.out.print(textclick.getText());
     
+    
+    
+    }
+    @Test()
+    public void  handlemobilekeyboad() {
+    	driver.isKeyboardShown();
+    	driver.findElement(AppiumBy.className(""));
+    	driver.findElement(By.id(""));
+    	driver.hideKeyboard();
     }
     
 
